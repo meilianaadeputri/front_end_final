@@ -1,21 +1,24 @@
-const endpoint_url = 'https://51018023.p-web.click/srv4/api';
+const endpoint_url = 'https://51018023.p-web.click/ukmapp/api';
+var url2;
 
-document.addEventListener("DOMContentLoaded", function(){
-  getRoomRate();
-});
-
-function getRoomRate() {
-  fetch(endpoint_url + "/rooms/roomcountbytype")
+function getAnggota(tahun) {
+  if(tahun==2017){url2="/member/daftarmember/?tahun=2017"}
+  else if(tahun==2018){url2="/member/daftarmember/?tahun=2018"}
+  else if(tahun==2019){url2="/member/daftarmember/?tahun=2019"}
+  else {url2="/member/daftarmember"};
+// caramu ambil query bemana? yg itu kyk ?tahun-=8
+  fetch(endpoint_url + url2)
   .then(status)
   .then(json)
   .then(function(data){
     var tb_header = `
-      <table id="tb_roomrate">
+      <table id="tb_anggota">
         <thead>
           <tr>
-            <th>Room Type</th>
-            <th>Room Rate</th>
-            <th>Available</th>
+            <th>Nama</th>
+            <th>Prodi</th>
+            <th>Angkatan</th>
+            <th>Telepon</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -23,125 +26,117 @@ function getRoomRate() {
     `;
 
     $("#dttable").html(tb_header);
-    $("#tb_title").html("Room Rate");
 
-    $('#tb_roomrate').DataTable({
-      "data": data.rooms,
-      "columns": [
-        {"data": "rtype"},
-        {"data": "rate"},
-        {"data": "jumlah_kamar"}
-      ]
-    });
-    $('select').formSelect();
-  })
-  .catch(error);
-}
-
-function getRoomList(){
-  fetch(endpoint_url + "/rooms/daftarkamar")
-  .then(status)
-  .then(json)
-  .then(function(data){
-    var tb_header = `
-      <table id="tb_roomrate">
-        <thead>
-          <tr>
-            <th>Room</th>
-            <th>Type</th>
-            <th>View</th>
-            <th>Rate/th>
-          </tr>
-        </thead>
-      <tbody></tbody>
-    </table>
-    `;
-
-    $("#dttable").html(tb_header);
-    $("#tb_title").html("Rooms");
-
-    $('#tb_roomrate').DataTable({
-      "data": data.rooms,
-      "columns": [
-        {"data": "room"},
-        {"data": "rtype"},
-        {"data": "dview"},
-        {"data": "vrate"}
-      ]
-    });
-    $('select').formSelect();
-  })
-  .catch(error);
-}
-
-function getGuestList(){
-  fetch(endpoint_url + "/guest/daftartamunginap")
-  .then(status)
-  .then(json)
-  .then(function(data){
-    var tb_header = `
-      <table id="tb_roomrate">
-        <thead>
-          <tr>
-            <th>Room#</th>
-            <th>From</th>
-            <th>Room</th>
-            <th>Check-in/th>
-          </tr>
-        </thead>
-      <tbody></tbody>
-    </table>
-    `;
-
-    $("#dttable").html(tb_header);
-    $("#tb_title").html("Guests");
-
-    $('#tb_roomrate').DataTable({
-      "data": data.guests,
-      "columns": [
-        {"data": "nama"},
-        {"data": "Country"},
-        {"data": "room"},
-        {"data": "date_in"}
-      ]
-    });
-    $('select').formSelect();
-  })
-  .catch(error);
-}
-
-function getMemberList(){
-  fetch(endpoint_url + "/member/daftarmembernginap")
-  .then(status)
-  .then(json)
-  .then(function(data){
-    var tb_header = `
-      <table id="tb_roomrate">
-        <thead>
-          <tr>
-            <th>Room#</th>
-            <th>From</th>
-            <th>Room</th>
-            <th>Check-in/th>
-          </tr>
-        </thead>
-      <tbody></tbody>
-    </table>
-    `;
-
-    $("#dttable").html(tb_header);
-    $("#tb_title").html("Members");
-
-    $('#tb_roomrate').DataTable({
+    $('#tb_anggota').DataTable({
       "data": data.members,
       "columns": [
         {"data": "nama"},
-        {"data": "Country"},
-        {"data": "room"},
-        {"data": "date_in"}
+        {"data": "prodi"},
+        {"data": "angkatan"},
+        {"data": "telepon"}
       ]
     });
     $('select').formSelect();
+  })
+  .catch(error);
+}
+
+function getJadwal(nama_jadwal) {
+  fetch(endpoint_url + "/jadwal/daftarjadwal")
+  .then(status)
+  .then(json)
+  .then(function(data){
+    var jadwalHTML = "";
+    data.jadwal.forEach(function(jadwal) {
+      jadwalHTML += `
+      <div class="divider"></div>
+        <div class="section">
+          <h5><a href="detail_kegiatan.html?jadwal=${jadwal.nama}">${jadwal.nama}</a></h5>
+          <p>${jadwal.tanggal} - ${jadwal.tempat}</p>
+      </div>
+    `;
+  });
+
+    document.getElementById("jadwal_list").innerHTML = jadwalHTML;
+  })
+  .catch(error);
+}
+
+function getDetail(nama_jadwal) {
+  fetch(endpoint_url + "/jadwal/daftarjadwal")
+  .then(status)
+  .then(json)
+  .then(function(data){
+    var detail=null;
+    data.jadwal.forEach(el=> {
+      if (el.nama==nama_jadwal){detail=el};
+    });
+    console.log(detail);
+    var detailHTML = "";
+      detailHTML += `
+        <div class="section">
+          <h5>${detail.nama}</h5>
+          <p>${detail.tanggal} - ${detail.tempat}</p>
+          <div class="divider"></div>
+        </div>
+        <div class="row">
+          <div class="col s12 m3 l4">
+            <img src"${detail.foto1}" alt="${detail.nama}" class="responsive-img"/>
+            <img src"${detail.foto2}" alt="${detail.nama}" class="responsive-img"/>
+            <img src"${detail.foto3}" alt="${detail.nama}" class="responsive-img"/>
+          </div>
+          <div class="col s12 m9 l8">
+            <p>${detail.detail}</p>
+            <p>Penanggung jawab kegiatan:</p>
+              <ul>
+                <li>${detail.pj2}</li>
+                <li>${detail.pj1}</li>
+              </ul>
+          </div>
+    `;
+    document.getElementById("detail_kegiatan").innerHTML = detailHTML;
+  })
+  .catch(error);
+}
+
+function getMessageBox(){
+  alert("Terima kasih atas ide yang diberikan. Semoga harimu menyenangkan! ☺");
+}
+
+function getStruktur() {
+  fetch(endpoint_url + "/member/strukturorganisasi")
+  .then(status)
+  .then(json)
+  .then(function(data){
+    var orangHTML = "";
+    data.members.forEach(function(orang) {
+      if(orang.nama=="William Bentley"){
+        x="s8 bluechef";
+      } else if(orang.nama=="Fira Mulia"){
+        x="s8 offset-s4 redchef";
+      } else if(orang.nama=="Evelyn Winny"){
+        x="s8 redchef";
+      } else {
+        x="s8 offset-s4 bluechef"
+      };
+      orangHTML += `
+      <div class="container">
+        <div class="row">
+          <div class="col ${x}">
+            <p>
+              <img src="${orang.foto}" style="float:left;"/>
+              ${orang.nama} <br>
+              ${orang.prodi} - ${orang.angkatan} <br>
+              ${orang.status} <br>
+              ${orang.telepon} <br>
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+    document.getElementById("struktur_list").innerHTML = orangHTML;
   })
   .catch(error);
 }

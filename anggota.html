@@ -14,7 +14,7 @@
   <body>
     <nav class="grey lighten-1" role="navigation">
       <div class="nav-wrapper container">
-        <a href="/ukmbodhivijja"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
+        <a href="/bodhivijja/home.html/ukmbodhivijja"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="home.html"><i class="material-icons">home</i></a></li>
           <li><a href="anggota.html"><i class="material-icons">contacts</i></a></li>
@@ -34,7 +34,13 @@
 
       <div class="container">
         <h4>Anggota UKM Bodhivijja</h4>
-
+        <div class="right">
+          <button class="btn grey darken-3" onclick="getAnggota(2017);">2017</button>
+          <button class="btn grey darken-3" onclick="getAnggota(2018);">2018</button>
+          <button class="btn grey darken-3" onclick="getAnggota(2019);">2019</button>
+        </div>
+        <div id="dttable">
+        </div>
       </div>
 
         <footer class="page-footer grey darken-3">
@@ -67,5 +73,10 @@
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/ukmbodhivijja.js"></script>
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      getAnggota(0);
+    });
+    </script>
   </body>
 </html>

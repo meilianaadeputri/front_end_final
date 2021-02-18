@@ -14,7 +14,7 @@
   <body>
     <nav class="grey lighten-1" role="navigation">
       <div class="nav-wrapper container">
-        <a href="/ukmbodhivijja"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
+        <a href="/bodhivijja/home.html"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="home.html"><i class="material-icons">home</i></a></li>
           <li><a href="anggota.html"><i class="material-icons">contacts</i></a></li>
@@ -34,7 +34,8 @@
 
       <div class="container">
         <h4>Jadwal Kegiatan</h4>
-
+        <div id="jadwal_list">
+        </div>
       </div>
 
         <footer class="page-footer grey darken-3">
@@ -67,5 +68,10 @@
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/ukmbodhivijja.js"></script>
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      getJadwal();
+    });
+    </script>
   </body>
 </html>

@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="css/materialize.min.css" media="screen,projection">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="css/style.css" media="screen,projection">
@@ -14,7 +15,7 @@
   <body>
     <nav class="grey lighten-1" role="navigation">
       <div class="nav-wrapper container">
-        <a href="/ukmbodhivijja"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
+        <a href="/bodhivijja/home.html"><img src="img/logo_ukm.png" alt="logo ukm"> UKM Bodhivijja</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="home.html"><i class="material-icons">home</i></a></li>
           <li><a href="anggota.html"><i class="material-icons">contacts</i></a></li>
@@ -34,7 +35,9 @@
 
       <div class="container">
         <h4>Detail Kegiatan</h4>
+        <div id="detail_kegiatan">
 
+        </div>
       </div>
 
         <footer class="page-footer grey darken-3">
@@ -67,5 +70,12 @@
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/ukmbodhivijja.js"></script>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const jadwal = urlParams.get('jadwal');
+        getDetail(jadwal);
+      });
+    </script>
   </body>
 </html>

@@ -67,34 +67,33 @@ function getDetail(nama_jadwal) {
   .then(status)
   .then(json)
   .then(function(data){
-    var detail=null;
+    var deskripsi=null;
     data.jadwal.forEach(el=> {
-      if (el.nama==nama_jadwal){detail=el};
+      if (el.nama==nama_jadwal){deskripsi=el};
     });
-    console.log(detail);
-    var detailHTML = "";
-      detailHTML += `
+    var deskripsiHTML = "";
+      deskripsiHTML += `
         <div class="section">
-          <h5>${detail.nama}</h5>
-          <p>${detail.tanggal} - ${detail.tempat}</p>
+          <h5>${deskripsi.nama}</h5>
+          <p>${deskripsi.tanggal} - ${deskripsi.tempat}</p>
           <div class="divider"></div>
         </div>
         <div class="row">
           <div class="col s12 m3 l4">
-            <img src"${detail.foto1}" alt="${detail.nama}" class="responsive-img"/>
-            <img src"${detail.foto2}" alt="${detail.nama}" class="responsive-img"/>
-            <img src"${detail.foto3}" alt="${detail.nama}" class="responsive-img"/>
+            <img src="${deskripsi.foto1}" alt="${deskripsi.nama}" class="responsive-img"/>
+            <img src="${deskripsi.foto2}" alt="${deskripsi.nama}" class="responsive-img"/>
+            <img src="${deskripsi.foto3}" alt="${deskripsi.nama}" class="responsive-img"/>
           </div>
           <div class="col s12 m9 l8">
-            <p>${detail.detail}</p>
+            <p>${deskripsi.detail}</p>
             <p>Penanggung jawab kegiatan:</p>
               <ul>
-                <li>${detail.pj2}</li>
-                <li>${detail.pj1}</li>
+                <li>${deskripsi.pj2}</li>
+                <li>${deskripsi.pj1}</li>
               </ul>
           </div>
     `;
-    document.getElementById("detail_kegiatan").innerHTML = detailHTML;
+    document.getElementById("detail_kegiatan").innerHTML = deskripsiHTML;
   })
   .catch(error);
 }
@@ -124,7 +123,7 @@ function getStruktur() {
         <div class="row">
           <div class="col ${x}">
             <p>
-              <img src="${orang.foto}" style="float:left;"/>
+              <img src="${orang.foto}" style="float:left;" class="responsive-img"/>
               ${orang.nama} <br>
               ${orang.prodi} - ${orang.angkatan} <br>
               ${orang.status} <br>

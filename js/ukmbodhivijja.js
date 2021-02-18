@@ -6,7 +6,6 @@ function getAnggota(tahun) {
   else if(tahun==2018){url2="/member/daftarmember/?tahun=2018"}
   else if(tahun==2019){url2="/member/daftarmember/?tahun=2019"}
   else {url2="/member/daftarmember"};
-// caramu ambil query bemana? yg itu kyk ?tahun-=8
   fetch(endpoint_url + url2)
   .then(status)
   .then(json)

@@ -95,11 +95,11 @@ body {
 }
 
 .login {
-  margin-top: 15%;
+  margin-top: 10%;
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
-  padding: 50px;
+  width: 30%;
+  padding: 20px;
   border: none;
   background-color: white;
 }
@@ -121,4 +121,11 @@ p img {
   padding-bottom: 10px;
   color: white;
   border-radius: 10px;
+}
+
+.bg {
+  height: 100%;
+  background-position: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
